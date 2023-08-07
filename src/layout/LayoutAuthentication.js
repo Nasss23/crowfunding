@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import PropTypes from "prop-types"
+import { withErrorBoundary } from "react-error-boundary"
+import ErrorComponent from '../components/common/ErrorComponent';
 //Layout trong cho SignUp & SignIn 
 const LayoutAuthentication = (props) => {
     const { children, heading = '' } = props;
@@ -24,4 +26,11 @@ const LayoutAuthentication = (props) => {
     );
 };
 
-export default LayoutAuthentication;
+LayoutAuthentication.propTypes = {
+    heading: PropTypes.string,
+    children: PropTypes.node
+}
+
+export default withErrorBoundary(LayoutAuthentication, {
+    FallbackComponent: ErrorComponent
+});
