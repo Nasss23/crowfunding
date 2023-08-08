@@ -7,20 +7,33 @@ import Input from 'components/input/Input';
 import FormGroup from 'components/common/FormGroup';
 import { Button } from 'components/button';
 import Checkbbox from 'components/checkbox/Checkbbox';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
+const schema = yup.object({
+    name: yup.string().required('This is field required'),
+    email: yup.string().required('This is field required').email('This email already registered '),
+    password: yup.string().required('This is field required').min(8, 'Password must be 8 character ')
+});
 
 const SignUpPage = () => {
     const {
         handleSubmit,
         control,
-        formState: { isValid, isSubmitting },
-    } = useForm({});
+        formState: { isValid, isSubmitting, errors },
+    } = useForm({
+        resolver: yupResolver(schema),
+        mode: "onSubmit"
+    });
     const handleSignUp = (values) => {
         console.log('values: ', values);
     };
     const [acceptTerm, setAcceptTerm] = useState(false);
     const handleToggleTerm = () => {
-        setAcceptTerm(!acceptTerm)
-    }
+        setAcceptTerm(!acceptTerm);
+    };
+    console.log(errors);
+
     return (
         <LayoutAuthentication heading='Sign Up'>
             <p className='mb-6 text-xs font-normal text-center lg:text-sm text-text3 lg:mb-8'>
@@ -39,7 +52,11 @@ const SignUpPage = () => {
             <form onSubmit={handleSubmit(handleSignUp)}>
                 <FormGroup>
                     <Label htmlFor='name'>Full Name *</Label>
-                    <Input control={control} name='name' placeholder='Username'></Input>
+                    <Input
+                        control={control}
+                        name='name'
+                        placeholder="Username"
+                        error={errors.name?.message}></Input>
                 </FormGroup>
                 <FormGroup>
                     <Label htmlFor='email'>Email *</Label>
@@ -47,7 +64,8 @@ const SignUpPage = () => {
                         control={control}
                         name='email'
                         type='email'
-                        placeholder='example@gmail.com'></Input>
+                        placeholder='example@gmail.com'
+                        error={errors.email?.message}></Input>
                 </FormGroup>
                 <FormGroup>
                     <Label htmlFor='password'>Password *</Label>
@@ -55,11 +73,14 @@ const SignUpPage = () => {
                         control={control}
                         name='password'
                         type='password'
-                        placeholder='Create a password'>
-                    </Input>
+                        placeholder='Create a password'
+                        error={errors.password?.message}></Input>
                 </FormGroup>
                 <div className='flex items-start mb-5 gap-x-5'>
-                    <Checkbbox name="term" checked={acceptTerm} onClick={handleToggleTerm}>
+                    <Checkbbox
+                        name='term'
+                        checked={acceptTerm}
+                        onClick={handleToggleTerm}>
                         <p className='flex-1 text-sm text-text2'>
                             I agree to the{' '}
                             <span className='underline text-secondary'>Terms of Use</span> and
