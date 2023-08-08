@@ -4,7 +4,7 @@ const Checkbbox = ({ checked = false, onClick = () => { }, name = '', children }
     return (
         <div className='flex items-start gap-x-5'>
             <label
-                className={`inline-flex items-center justify-center p-1 w-5 h-5 border text-white rounded ${checked ? 'bg-primary border-primary' : 'border-strockSoft'
+                className={`inline-flex items-center justify-center p-1 w-5 h-5 border text-white rounded ${checked ? 'bg-primary border-primary' : 'border-strockSoft dark:border-text3'
                     }`}>
                 <input
                     type='checkbox'
@@ -13,7 +13,7 @@ const Checkbbox = ({ checked = false, onClick = () => { }, name = '', children }
                     onClick={onClick}
                     name={name}
                 />
-                <span>
+                <span className={`${checked ? '' : 'opacity-0 invisible'}`}>
                     <svg
                         xmlns='http://www.w3.org/2000/svg'
                         fill='none'
