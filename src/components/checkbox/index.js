@@ -1,1 +1,1 @@
-export const { default: Checkbox } = require("./Checkbbox")
+export const { default: Checkbox } = require("./Checkbox")

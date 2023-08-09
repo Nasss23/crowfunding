@@ -6,7 +6,7 @@ import { Label } from 'components/label';
 import Input from 'components/input/Input';
 import FormGroup from 'components/common/FormGroup';
 import { Button } from 'components/button';
-import Checkbbox from 'components/checkbox/Checkbbox';
+import Checkbox from 'components/checkbox/Checkbbox';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { IconEyeToggle } from 'components/icons';
@@ -96,7 +96,7 @@ const SignUpPage = () => {
                     </Input>
                 </FormGroup>
                 <div className='flex items-start mb-5 gap-x-5'>
-                    <Checkbbox
+                    <Checkbox
                         name='term'
                         checked={acceptTerm}
                         onClick={handleToggleTerm}>
@@ -106,7 +106,7 @@ const SignUpPage = () => {
                             have read and understand the{' '}
                             <span className='underline text-secondary'>Privacy policy</span>.
                         </p>
-                    </Checkbbox>
+                    </Checkbox>
                 </div>
                 <Button className='w-full bg-primary' type='submit'>
                     Create my account

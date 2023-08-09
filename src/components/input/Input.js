@@ -3,6 +3,7 @@ import { useController } from 'react-hook-form';
 import PropTypes from 'prop-types';
 import { withErrorBoundary } from 'react-error-boundary';
 import ErrorComponent from 'components/common/ErrorComponent';
+import classNames from 'utils/classNames';
 
 const Input = (props) => {
     const {
@@ -25,10 +26,13 @@ const Input = (props) => {
             <input
                 id={name}
                 type={type}
-                className={`w-full px-6 py-4 text-sm font-medium border rounded-xl text-text1 placeholder:text-text4 dark:placeholder:text-text2 dark:text-white bg-transparent ${error.length > 0
-                    ? 'border-error text-error'
-                    : 'border-strockSoft dark:border-darkStroke text-text1'
-                    } ${children ? 'pr-16' : ''}`}
+                className={classNames(
+                    'w-full px-6 py-4 text-sm font-medium border rounded-xl text-text1 placeholder:text-text4 dark:placeholder:text-text2 dark:text-white bg-transparent',
+                    error.length > 0
+                        ? 'border-error text-error'
+                        : 'border-strockSoft dark:border-darkStroke text-text1',
+                    children ? 'pr-16' : ''
+                )}
                 value={error}
                 placeholder={error.length <= 0 ? placeholder : ''}
                 {...field}
