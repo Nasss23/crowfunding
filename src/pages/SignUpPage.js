@@ -6,7 +6,7 @@ import { Label } from 'components/label';
 import Input from 'components/input/Input';
 import FormGroup from 'components/common/FormGroup';
 import { Button } from 'components/button';
-import Checkbox from 'components/checkbox/Checkbbox';
+import Checkbox from 'components/checkbox/Checkbox';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { IconEyeToggle } from 'components/icons';
@@ -36,14 +36,6 @@ const SignUpPage = () => {
     const handleSignUp = (values) => {
         console.log('values: ', values);
     };
-    // const [acceptTerm, setAcceptTerm] = useState(false);
-    // const [showPassword, setShowPassword] = useState(false);
-    // const handleToggleTerm = () => {
-    //     setAcceptTerm(!acceptTerm);
-    // };
-    // const handleTogglePassword = () => {
-    //     setShowPassword(!showPassword);
-    // };
     const { value: acceptTerm, handleToggleValue: handleToggleTerm } =
         useToggleValue();
     const { value: showPassword, handleToggleValue: handleTogglePassword } =
