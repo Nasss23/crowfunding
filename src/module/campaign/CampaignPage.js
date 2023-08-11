@@ -31,7 +31,7 @@ const CampaignPage = () => {
                         <a href="/#" className='text-sm text-primary'>Need any help? Learn More...</a>
                     </div>
                 </div>
-                <Button type='button' className='bg-opacity-20 bg-secondary !text-secondary'>Create campaign</Button>
+                <Button type='button' kind="ghost" className='px-8' href='/start-campaign'>Create campaign</Button>
             </div>
             <Heading number={4}>Your campaign</Heading>
             <CampaignGrid type='secondary'>
@@ -40,6 +40,12 @@ const CampaignPage = () => {
                 <CampaignFeature></CampaignFeature>
                 <CampaignFeature></CampaignFeature>
             </CampaignGrid>
+            <div className="mt-10"></div>
+            <Button kind="ghost" className='px-8 mx-auto'><span>See more</span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m6-6H6" />
+                </svg>
+            </Button>
         </LayoutDashboard>
     );
 };
