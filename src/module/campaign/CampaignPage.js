@@ -1,13 +1,13 @@
 import Heading from 'components/common/Heading';
 import LayoutDashboard from 'layout/LayoutDashboard';
-import React from 'react';
+import React, { Fragment } from 'react';
 import CampaignGrid from './CampaignGrid';
 import CampaignFeature from './CampaignFeature';
 import { Button } from 'components/button';
 
 const CampaignPage = () => {
     return (
-        <LayoutDashboard>
+        <Fragment>
             <div className='flex items-center justify-between px-10 py-8 mb-10 bg-white rounded-3xl'>
                 <div className='flex items-start gap-x-6 '>
                     <div className='flex items-center justify-center text-white rounded-full w-14 h-14 bg-opacity-60 bg-secondary'>
@@ -46,7 +46,7 @@ const CampaignPage = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m6-6H6" />
                 </svg>
             </Button>
-        </LayoutDashboard>
+        </Fragment>
     );
 };
 
