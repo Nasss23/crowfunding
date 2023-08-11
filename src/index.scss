@@ -16,3 +16,25 @@
 input:focus + .error-input {
   display: none;
 }
+.quill {
+  @apply border border-strockSoft rounded-xl;
+  border-radius: 10px;
+  border: 1px solid #f1f1f3;
+  padding: 15px 25px;
+  .ql-toolbar.ql-snow {
+    border: none;
+    background: none;
+    @apply bg-text4 bg-opacity-10 rounded-xl py-3 px-5 inline-block;
+  }
+  .ql-container.ql-snow,
+  .ql-editor {
+    @apply border-none font-normal text-sm;
+  }
+  .ql-editor {
+    @apply pt-10;
+  }
+  .ql-editor.ql-blank::before {
+    font-style: normal;
+    @apply text-sm not-italic text-text4;
+  }
+}
