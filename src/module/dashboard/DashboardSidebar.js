@@ -9,7 +9,6 @@ import {
 } from 'components/icons';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import classNames from 'utils/classNames';
 const sidebarLinks = [
     {
         icon: <IconDashboard></IconDashboard>,
@@ -39,28 +38,26 @@ const sidebarLinks = [
     {
         icon: <IconLogout></IconLogout>,
         title: 'Logout',
-        url: '/#',
+        url: '/lo',
         onClick: () => { },
     },
     {
         icon: <IconDarkmode></IconDarkmode>,
         title: 'Light/Dark',
-        url: '#',
+        url: '/k',
         onClick: () => { },
     },
 ];
 
 const DashboardSidebar = () => {
+    const navLinkClass = "flex items-center gap-x-5 md:w-12 md:h-12 md:justify-center md:rounded-lg md:mb-8 last:mt-auto last:bg-white last:shadow-sdprimary"
     return (
         <div className='w-full md:w-[76px] rounded-3xl bg-white shadow-[10px_10px_20px_rgba(218,_213,_213,_0.15)] px-[14px] py-10 flex flex-col flex-shrink-0'>
             {sidebarLinks.map((link) => (
                 <NavLink
                     to={link.url}
                     key={link.title}
-                    className={classNames('flex items-center gap-x-5 md:w-12 md:h-12 md:justify-center md:rounded-lg md:mb-8 text-icon-color last:mt-auto last:bg-white last:shadow-sdprimary',
-                        ({ isActive }) => (isActive ? 'bg-primary text-primary bg-opacity-20' : '')
-                    )}
-
+                    className={({ isActive }) => (isActive ? `${navLinkClass} text-primary bg-primary bg-opacity-20` : `${navLinkClass} text-icon-color`)}
                 >
                     <span>{link.icon}</span>
                     <span className='md:hidden'>{link.title}</span>
