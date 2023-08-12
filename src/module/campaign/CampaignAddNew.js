@@ -3,17 +3,19 @@ import FormRow from 'components/common/FormRow';
 import { Dropdown } from 'components/dropdown';
 import { Input, Textarea } from 'components/input';
 import { Label } from 'components/label';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import ReactQuill, { Quill } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import ImageUploader from 'quill-image-uploader';
 import axios from 'axios';
 import { Button } from 'components/button';
+import useOnchange from 'hooks/useOnchange';
+import { toast } from 'react-toastify';
 Quill.register('modules/imageUploader', ImageUploader);
 
 const CampaignAddNew = () => {
-    const { handleSubmit, control } = useForm({});
+    const { handleSubmit, control, setValue } = useForm({});
     const [content, setContent] = useState('');
     const handleAddNewCampaign = (values) => {
         console.log('values: ', values);
@@ -46,6 +48,31 @@ const CampaignAddNew = () => {
         }),
         []
     );
+    const handleSelectDropdownOption = (name, value) => {
+        setValue(name, value)
+    }
+    const handleSelectCategory = (value) => {
+        setValue('category', value);
+    };
+    const [countries, setContries] = useState([]);
+    const [filterCountry, setFilterCountry] = useOnchange(500);
+
+    useEffect(() => {
+        if (!filterCountry) return
+        try {
+            async function fetchCountry() {
+                const response = await axios.get(
+                    `https://restcountries.com/v3.1/name/${filterCountry}`
+                );
+                console.log('response: ', response);
+                setContries(response.data);
+            }
+            fetchCountry();
+        } catch (error) {
+            toast.error(error.message);
+        }
+    }, [filterCountry]);
+
     return (
         <div className='px-[66px] py-10 bg-white rounded-xl'>
             <div className='text-center'>
@@ -66,8 +93,10 @@ const CampaignAddNew = () => {
                             <Dropdown>
                                 <Dropdown.Select placeholder='Select a category'></Dropdown.Select>
                                 <Dropdown.List>
-                                    <Dropdown.Option>Teacher</Dropdown.Option>
-                                    <Dropdown.Option>Frontend</Dropdown.Option>
+                                    <Dropdown.Option
+                                        onClick={() => handleSelectDropdownOption('category', 'architecture')}>
+                                        Teacher
+                                    </Dropdown.Option>
                                 </Dropdown.List>
                             </Dropdown>
                         </FormGroup>
@@ -178,17 +207,24 @@ const CampaignAddNew = () => {
                                 <Dropdown.Select placeholder='Select one'></Dropdown.Select>
                                 <Dropdown.List>
                                     <Dropdown.Option>Teacher</Dropdown.Option>
-                                    <Dropdown.Option>Frontend</Dropdown.Option>
                                 </Dropdown.List>
                             </Dropdown>
                         </FormGroup>
                         <FormGroup>
-                            <Label className='text-left'>Counrty</Label>
+                            <Label className='text-left'>Country</Label>
                             <Dropdown>
                                 <Dropdown.Select placeholder='Select a country'></Dropdown.Select>
                                 <Dropdown.List>
-                                    <Dropdown.Option>Teacher</Dropdown.Option>
-                                    <Dropdown.Option>Frontend</Dropdown.Option>
+                                    <Dropdown.Search
+                                        placeholder='Search country'
+                                        onChange={setFilterCountry}></Dropdown.Search>
+                                    {countries.length > 0 &&
+                                        countries.map((country) => (
+                                            <Dropdown.Option
+                                                key={country?.name.common} onClick={() => handleSelectDropdownOption('country', country?.name?.common)}>
+                                                {country?.name?.common}
+                                            </Dropdown.Option>
+                                        ))}
                                 </Dropdown.List>
                             </Dropdown>
                         </FormGroup>
@@ -213,8 +249,10 @@ const CampaignAddNew = () => {
                                 placeholder='End Date'></Input>
                         </FormGroup>
                     </FormRow>
-                    <div className="mt-4 text-center">
-                        <Button kind='primary' className='px-10 mx-auto'>Submit new campaign</Button>
+                    <div className='mt-4 text-center'>
+                        <Button kind='primary' className='px-10 mx-auto'>
+                            Submit new campaign
+                        </Button>
                     </div>
                 </form>
             </div>
