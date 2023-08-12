@@ -38,7 +38,21 @@ input:focus + .error-input {
     @apply text-sm not-italic text-text4;
   }
 }
+.gradient-banner {
+  background-image: linear-gradient(180deg, rgba(32, 18, 63, 0) 0%, #000 93.43%),
+    url('https://images.unsplash.com/photo-1682687220499-d9c06b872eee?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fHx8&auto=format&fit=crop&w=500&q=60');
+}
 .shadow-1 {
   box-shadow: 4px 4px 8px 0px rgba(226, 226, 226, 0.2),
     -4px 4px 8px 0px rgba(226, 226, 226, 0.2);
+}
+.ReactModal__Body--open {
+  overflow: hidden;
+}
+.scroll-hidden {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scroll-hidden::-webkit-scrollbar {
+  display: none;
 }

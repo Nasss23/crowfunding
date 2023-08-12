@@ -60,18 +60,21 @@ const CampaignView = () => {
                     </Button>
                 </div>
             </div>
-            <div className="flex items-center justify-between mt-[100px] mb-6 bg-white p-5 border-b border-b-slate-200">
+            <div className='flex items-center justify-between mt-[100px] mb-6 bg-white p-5 border-b border-b-slate-200'>
                 <div className='flex items-center font-medium gap-x-14 text-text3'>
                     <span className='cursor-pointer text-secondary'>Campaign</span>
                 </div>
-                <Button kind="primary">Back this project</Button>
+                <Button kind='primary'>Back this project</Button>
             </div>
             <div className='grid gap-x-[124px] grid-cols-[1.3fr,1fr] mb-[70px]'>
-                <div></div>
+                <div>
+                    <h2 className='mb-5 text-lg font-semibold uppercase'>Story</h2>
+                    <div className='w-full bg-white'></div>
+                </div>
                 <div>
                     <CampaignSupport></CampaignSupport>
-                    <div className="mb-[60px]"></div>
-                    <div className="flex flex-col gap-y-[30px]">
+                    <div className='mb-[60px]'></div>
+                    <div className='flex flex-col gap-y-[30px]'>
                         <CampaignPerk></CampaignPerk>
                         <CampaignPerk></CampaignPerk>
                         <CampaignPerk></CampaignPerk>

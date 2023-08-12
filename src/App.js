@@ -1,6 +1,8 @@
 import LayoutDashboard from 'layout/LayoutDashboard';
 import React, { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import Modal from 'react-modal';
+
 
 const SignUpPage = lazy(() => import('./pages/SignUpPage'));
 const SignInPage = lazy(() => import('./pages/SignInPage'));
@@ -9,6 +11,16 @@ const StartCampaignPage = lazy(() => import('./pages/StartCampaignPage'));
 const CampaignPage = lazy(() => import('module/campaign/CampaignPage'));
 const CampaignView = lazy(() => import('module/campaign/CampaignView'));
 
+
+const customStyles = {
+  content: {
+
+  },
+};
+
+// Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
+Modal.setAppElement('#root');
+Modal.defaultStyles = {}
 function App() {
   return (
     <Suspense>
