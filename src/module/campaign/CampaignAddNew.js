@@ -12,6 +12,7 @@ import axios from 'axios';
 import { Button } from 'components/button';
 import useOnchange from 'hooks/useOnchange';
 import { toast } from 'react-toastify';
+import DatePicker from 'react-date-picker';
 Quill.register('modules/imageUploader', ImageUploader);
 
 const CampaignAddNew = () => {
@@ -48,9 +49,11 @@ const CampaignAddNew = () => {
         }),
         []
     );
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
     const handleSelectDropdownOption = (name, value) => {
-        setValue(name, value)
-    }
+        setValue(name, value);
+    };
     const handleSelectCategory = (value) => {
         setValue('category', value);
     };
@@ -58,7 +61,7 @@ const CampaignAddNew = () => {
     const [filterCountry, setFilterCountry] = useOnchange(500);
 
     useEffect(() => {
-        if (!filterCountry) return
+        if (!filterCountry) return;
         try {
             async function fetchCountry() {
                 const response = await axios.get(
@@ -94,7 +97,9 @@ const CampaignAddNew = () => {
                                 <Dropdown.Select placeholder='Select a category'></Dropdown.Select>
                                 <Dropdown.List>
                                     <Dropdown.Option
-                                        onClick={() => handleSelectDropdownOption('category', 'architecture')}>
+                                        onClick={() =>
+                                            handleSelectDropdownOption('category', 'architecture')
+                                        }>
                                         Teacher
                                     </Dropdown.Option>
                                 </Dropdown.List>
@@ -221,7 +226,13 @@ const CampaignAddNew = () => {
                                     {countries.length > 0 &&
                                         countries.map((country) => (
                                             <Dropdown.Option
-                                                key={country?.name.common} onClick={() => handleSelectDropdownOption('country', country?.name?.common)}>
+                                                key={country?.name.common}
+                                                onClick={() =>
+                                                    handleSelectDropdownOption(
+                                                        'country',
+                                                        country?.name?.common
+                                                    )
+                                                }>
                                                 {country?.name?.common}
                                             </Dropdown.Option>
                                         ))}
@@ -234,19 +245,25 @@ const CampaignAddNew = () => {
                             <Label className='text-left' htmlFor='start_date'>
                                 Start Date
                             </Label>
-                            <Input
-                                control={control}
-                                name='start_date'
-                                placeholder='Start Date'></Input>
+                            <DatePicker onChange={setStartDate} value={startDate} />
                         </FormGroup>
                         <FormGroup>
-                            <Label className='text-left' htmlFor='end_date'>
+                            <Label
+                                className='text-left'
+                                htmlFor='end_date'
+                                format='dd-MM-yyyy'>
                                 End Date
                             </Label>
-                            <Input
+                            <DatePicker
+                                onChange={setEndDate}
+                                value={endDate}
+                                format='dd-MM-yyyy'
+                            />
+
+                            {/* <Input
                                 control={control}
                                 name='end_date'
-                                placeholder='End Date'></Input>
+                                placeholder='End Date'></Input> */}
                         </FormGroup>
                     </FormRow>
                     <div className='mt-4 text-center'>
