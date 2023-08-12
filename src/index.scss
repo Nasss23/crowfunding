@@ -38,6 +38,7 @@ input:focus + .error-input {
     @apply text-sm not-italic text-text4;
   }
 }
-// .gradient-banner {
-//   background: linear-gradient(180deg, rgba(32, 18, 63, 0) 0%, #000 93.43%);
-// }
+.shadow-1 {
+  box-shadow: 4px 4px 8px 0px rgba(226, 226, 226, 0.2),
+    -4px 4px 8px 0px rgba(226, 226, 226, 0.2);
+}
