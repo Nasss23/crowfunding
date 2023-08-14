@@ -13,13 +13,38 @@ import { Button } from 'components/button';
 import useOnchange from 'hooks/useOnchange';
 import { toast } from 'react-toastify';
 import DatePicker from 'react-date-picker';
+import { apiURL } from 'config/config';
+import ImageUpload from 'components/image/ImageUpload';
 Quill.register('modules/imageUploader', ImageUploader);
 
+const categoriesData = ['architecture', 'education'];
+
 const CampaignAddNew = () => {
-    const { handleSubmit, control, setValue } = useForm({});
+    const { handleSubmit, control, setValue, reset, watch } = useForm({});
+    const getDropdownLabel = (name, defaultValue = '') => {
+        const value = watch(name) || defaultValue
+        return value;
+    };
     const [content, setContent] = useState('');
-    const handleAddNewCampaign = (values) => {
+    const resetValue = () => {
+        setStartDate('');
+        setEndDate('');
+        reset();
+    };
+    const handleAddNewCampaign = async (values) => {
         console.log('values: ', values);
+        try {
+            await axios.post(`${apiURL}/campaigns`, {
+                ...values,
+                content,
+                startDate,
+                endDate,
+            });
+            toast.success('Create campaign successfully');
+            resetValue();
+        } catch (error) {
+            toast.error('Can not create new campain');
+        }
     };
     const modules = useMemo(
         () => ({
@@ -94,14 +119,20 @@ const CampaignAddNew = () => {
                         <FormGroup>
                             <Label className='text-left'>Select a category *</Label>
                             <Dropdown>
-                                <Dropdown.Select placeholder='Select a category'></Dropdown.Select>
+                                <Dropdown.Select
+                                    placeholder={
+                                        getDropdownLabel('category', 'Select category')
+                                    }></Dropdown.Select>
                                 <Dropdown.List>
-                                    <Dropdown.Option
-                                        onClick={() =>
-                                            handleSelectDropdownOption('category', 'architecture')
-                                        }>
-                                        Teacher
-                                    </Dropdown.Option>
+                                    {categoriesData.map((category) => (
+                                        <Dropdown.Option
+                                            key={category}
+                                            onClick={() =>
+                                                handleSelectDropdownOption('category', category)
+                                            }>
+                                            <span className='capitalize'>{category}</span>
+                                        </Dropdown.Option>
+                                    ))}
                                 </Dropdown.List>
                             </Dropdown>
                         </FormGroup>
@@ -125,6 +156,13 @@ const CampaignAddNew = () => {
                             onChange={setContent}
                         />
                     </FormGroup>
+                    <FormRow>
+                        <FormGroup>
+                            <Label className='text-left'>Featured Image</Label>
+                            <ImageUpload onChange={setValue} name='featured-image'></ImageUpload>
+                        </FormGroup>
+                        <FormGroup></FormGroup>
+                    </FormRow>
                     <FormGroup>
                         <div className='flex items-center bg-secondary gap-x-5 px-[45px] rounded-lg py-6'>
                             <span>
@@ -218,10 +256,12 @@ const CampaignAddNew = () => {
                         <FormGroup>
                             <Label className='text-left'>Country</Label>
                             <Dropdown>
-                                <Dropdown.Select placeholder='Select a country'></Dropdown.Select>
+                                <Dropdown.Select placeholder={getDropdownLabel('country', 'Select country')}></Dropdown.Select>
                                 <Dropdown.List>
                                     <Dropdown.Search
-                                        placeholder='Search country'
+                                        placeholder={
+                                            getDropdownLabel('Search country...')
+                                        }
                                         onChange={setFilterCountry}></Dropdown.Search>
                                     {countries.length > 0 &&
                                         countries.map((country) => (
@@ -267,7 +307,7 @@ const CampaignAddNew = () => {
                         </FormGroup>
                     </FormRow>
                     <div className='mt-4 text-center'>
-                        <Button kind='primary' className='px-10 mx-auto'>
+                        <Button kind='primary' className='px-10 mx-auto' type='submid'>
                             Submit new campaign
                         </Button>
                     </div>
