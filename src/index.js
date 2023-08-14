@@ -6,6 +6,9 @@ import "./index.scss";
 import { Provider } from "react-redux";
 import { store } from "./store/configureStore";
 import { BrowserRouter } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -14,6 +17,7 @@ root.render(
   <Provider store={store}>
     <BrowserRouter>
       <App />
+      <ToastContainer></ToastContainer>
     </BrowserRouter>
   </Provider>
 );

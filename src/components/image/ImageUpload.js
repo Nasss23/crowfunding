@@ -1,12 +1,14 @@
 import axios from 'axios';
 import { imgbbAPI } from 'config/config';
 import React from 'react';
+import { toast } from 'react-toastify';
 
 const ImageUpload = ({ onChange = () => { }, name = "" }) => {
     const handleUploadImage = async (e) => {
         const file = e.target.files;
         if (!file) return;
         const bodyFormData = new FormData()
+        bodyFormData.append('image', file[0])
         bodyFormData.append("image", file)
         const reponse = await axios({
             method: "post",
@@ -16,7 +18,17 @@ const ImageUpload = ({ onChange = () => { }, name = "" }) => {
                 "Content-Type": "multipart/form-data"
             },
         })
-        // onChange(name, reponse.data.data.url)
+        const imageData = reponse.data.data
+        if (!imageData) {
+            toast.error("Can not ipload image ")
+            return
+        }
+        const imageObj = {
+            medium: imageData.medium.url,
+            thumb: imageData.medium.url,
+            url: imageData.url
+        }
+        onChange(name, imageObj)
 
     }
     return (

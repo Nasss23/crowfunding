@@ -13,7 +13,7 @@ import { Button } from 'components/button';
 import useOnchange from 'hooks/useOnchange';
 import { toast } from 'react-toastify';
 import DatePicker from 'react-date-picker';
-import { apiURL } from 'config/config';
+import { apiURL, imgbbAPI } from 'config/config';
 import ImageUpload from 'components/image/ImageUpload';
 Quill.register('modules/imageUploader', ImageUploader);
 
@@ -57,19 +57,19 @@ const CampaignAddNew = () => {
                 ['link', 'image'],
             ],
             imageUploader: {
-                // upload: async (file) => {
-                //     const bodyFormData = new FormData()
-                //     bodyFormData.append("image", file)
-                //     const reponse = await axios({
-                //         method: "post",
-                //         url: imgbbAPI,
-                //         data: bodyFormData,
-                //         header: {
-                //             "Content-Type": "multipart/form-data"
-                //         },
-                //     })
-                //     return reponse.data.data.url
-                // },
+                upload: async (file) => {
+                    const bodyFormData = new FormData()
+                    bodyFormData.append("image", file)
+                    const reponse = await axios({
+                        method: "post",
+                        url: imgbbAPI,
+                        data: bodyFormData,
+                        header: {
+                            "Content-Type": "multipart/form-data"
+                        },
+                    })
+                    return reponse.data.data.url
+                },
             },
         }),
         []
@@ -92,7 +92,6 @@ const CampaignAddNew = () => {
                 const response = await axios.get(
                     `https://restcountries.com/v3.1/name/${filterCountry}`
                 );
-                console.log('response: ', response);
                 setContries(response.data);
             }
             fetchCountry();
@@ -159,7 +158,7 @@ const CampaignAddNew = () => {
                     <FormRow>
                         <FormGroup>
                             <Label className='text-left'>Featured Image</Label>
-                            <ImageUpload onChange={setValue} name='featured-image'></ImageUpload>
+                            <ImageUpload onChange={setValue} name='featured_image'></ImageUpload>
                         </FormGroup>
                         <FormGroup></FormGroup>
                     </FormRow>
